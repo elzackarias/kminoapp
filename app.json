@@ -7,9 +7,9 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-2.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#7145d6"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -18,12 +18,27 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.vezack.kmino",
+      "buildNumber": "1.0.0",
+      "config": {
+        "googleMapsApiKey":"AIzaSyCUMx_f6RU7ds4qI5CefpgEis8CO7WmQIM"
+      },
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This application uses the location to allow distance calculations between two locations, the user's and another and show the user's location."
+      }
     },
     "android": {
+      "package": "com.vezack.kmino",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCUMx_f6RU7ds4qI5CefpgEis8CO7WmQIM"
+        }
       }
     },
     "web": {
