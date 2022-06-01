@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
-import { StyleSheet, Text, View, Button, Dimensions, Platform, ScrollView, ActivityIndicator, Image } from 'react-native';
+import { UsuarioContext } from '../services/UsuarioContext'
+import { StyleSheet, Text, View, Button, Dimensions, Platform, ScrollView, ActivityIndicator, Image, Alert } from 'react-native';
 import * as Location from 'expo-location';
 import io from "socket.io-client";
 let socket;
 
-export default function MainScreen() {
+export default function MainScreen({navigation}) {
 
   const [location, setLocation] = useState(null);
+  const [login, loginAction] = useContext(UsuarioContext)
   const [watchId, setWatchId] = useState(null);
   const [positions, setPositions] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -19,7 +21,7 @@ export default function MainScreen() {
 
   useEffect(() => {
     //socket = io('https://1a8d-189-202-31-5.ngrok.io/');
-    socket = io('http://192.168.0.117:3000')
+    socket = io('http://192.168.0.17:3000')
     const datos = [
       {
         id: 1,
@@ -387,6 +389,7 @@ export default function MainScreen() {
           <View style={{ flexDirection: 'row' }}>
             <Text style={{ fontSize: 16 }}>Rutas:</Text>
             <Text style={{ fontStyle: 'italic' }}> (Da clic en el boton para ver la ruta)</Text>
+            <Text onPress={() => {desconectarse()}}>CERRAR SESION</Text>
           </View>
           {rutas.map((ruta, index) => (
             <Button
@@ -401,6 +404,29 @@ export default function MainScreen() {
       </ScrollView>
     </View>
   );
+
+  function desconectarse() {
+
+    Alert.alert(
+        "Salir",
+        "¿Está seguro que desea cerrar la sesión?",
+        [
+            {
+                text: "SI", onPress: () => {
+                    loginAction({
+                        type: 'sign-out',
+                        data: {}
+                    })
+                    navigation.replace('Login')
+                }
+            },
+            {
+                text: "NO", onPress: () => { }, style: 'cancel'
+            }
+        ]
+    )
+}
+
 }
 
 const styles = StyleSheet.create({

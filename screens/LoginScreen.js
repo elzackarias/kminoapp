@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert, ActivityIndicator, View, Text, TouchableOpacity, TextInput, Image, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { style } from '../style/style'
 
@@ -42,11 +43,17 @@ export default function LoginScreen({ navigation }) {
       Alert.alert('Error!', 'Correo no válido')
     } else {
       try {
-        const peticion = await fetch('http://192.168.1.101:3000/login', settings);
+        const peticion = await fetch('http://192.168.0.17:3000/login', settings);
         const respuesta = await peticion.json();
         if (respuesta.status == 'Ok') {
-          setLoading(false)
-          alert(JSON.stringify(respuesta))
+          //alert()
+          try{
+            await AsyncStorage.setItem('@userdata', JSON.stringify(respuesta))
+            navigation.replace('Main');
+          }catch(e){
+            setLoading(false)
+            Alert.alert('Error','Ocurrió un error extraño, cierre la app e intente de nuevo')
+          }
         } else {
           setLoading(false);
           alert(respuesta.msg)

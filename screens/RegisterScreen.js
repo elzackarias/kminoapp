@@ -45,7 +45,7 @@ export default function RegisterScreen({ navigation }) {
             Alert.alert('Error!', 'Correo no válido')
         } else {
             try {
-                const peticion = await fetch('http://192.168.1.101:3000/register', settings);
+                const peticion = await fetch('http://192.168.0.17:3000/register', settings);
                 const respuesta = await peticion.json();
                 if (respuesta.status == 'Ok') {
                     setLoading(false)
