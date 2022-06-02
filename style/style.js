@@ -111,7 +111,12 @@ const style = StyleSheet.create({
         textAlign:'center',
         textAlignVertical:'center',
         color:'#fff',
-    }
+    },
+    headText:{
+        fontFamily:'ProximaBold',
+        color:'#fff',
+        fontSize:23
+    },
 });
 
 export { style };
